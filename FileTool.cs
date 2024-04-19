@@ -15,6 +15,8 @@ namespace file
             internal static List<string> GetListOfFullPathFiles(string directory)
             {
                 return Directory.EnumerateFiles(directory).ToList<string>();
+                //filered list of files
+                //return Directory.EnumerateFiles(directory,"*.log").ToList<string>();
             }
 
             //list files on disk into collection
@@ -51,6 +53,32 @@ namespace file
             }
 
             return text;
+        }
+
+        //read lines from file
+        internal static List<string> GetLinesTextFromFile(string filePath)
+        {
+            string? text = null;
+            List<string> result = new List<string>();
+            using (StreamReader streamReader = File.OpenText(filePath))
+            {
+                while (!streamReader.EndOfStream)
+                {
+                    text = streamReader.ReadLine();
+                    result.Add(text);
+                }
+            }
+
+            return result;
+        }
+		
+		//write line into file
+        internal static void WriteLineIntoFile(string line, string filePath)
+        {
+            using (StreamWriter writer = new StreamWriter(filePath,true))
+            {
+                writer.WriteLine(line);
+            }
         }
 
 
